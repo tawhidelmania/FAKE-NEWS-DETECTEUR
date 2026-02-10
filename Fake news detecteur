@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Détecteur de Fake News</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f4f4;
+      text-align: center;
+      padding: 20px;
+    }
+    textarea {
+      width: 80%;
+      height: 150px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📰 Détecteur de Fake News</h1>
+
+  <textarea id="news" placeholder="Collez ici le texte à analyser..."></textarea>
+  <br>
+  <button onclick="analyser()">Analyser</button>
+
+  <p id="resultat"></p>
+
+  <script>
+    function analyser() {
+      let texte = document.getElementById("news").value.toLowerCase();
+      let score = 0;
+
+      let motsSuspects = ["incroyable", "choc", "secret", "urgent", "complot", "100%"];
+
+      motsSuspects.forEach(mot => {
+        if (texte.includes(mot)) score++;
+      });
+
+      if (texte.includes("!!!")) score++;
+      if (texte.length < 50) score++;
+
+      let resultat = document.getElementById("resultat");
+
+      if (score >= 3) {
+        resultat.innerHTML = "⚠️ Information probablement FAUSSE";
+        resultat.style.color = "red";
+      } else {
+        resultat.innerHTML = "✅ Information probablement FIABLE";
+        resultat.style.color = "green";
+      }
+    }
+  </script>
+
+</body>
+</html>
